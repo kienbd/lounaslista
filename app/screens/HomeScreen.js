@@ -1,27 +1,12 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
-import { RkButton } from 'react-native-ui-kitten'
-import { StackNavigator } from 'react-navigation'
-
+import { View, Text } from 'react-native'
 
 export default class HomeScreen extends Component {
-  static navigationOptions = {
-    title: 'Home Screen'
-  }
-
   render() {
     const { viewStyles } = styles
     return (
       <View style={viewStyles}>
-        <RkButton
-          rkType='title'
-          style={{height: 100, width: 100}}
-          onPress = { () => this.props.navigation.navigate('Details', {
-            text: 'From Home'
-          })}
-        >
-          Go to Details Screen
-        </RkButton>
+        <Text> Home </Text>
       </View>
     )
   }

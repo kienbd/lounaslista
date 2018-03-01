@@ -1,10 +1,8 @@
 import HomeScreen from './HomeScreen'
-import DetailsScreen from './DetailsScreen'
-import ModalScreen from './ModalScreen'
+import LoadingScreen from './LoadingScreen'
 
 
 export default Screens = {
-  HomeScreen,
-  DetailsScreen,
-  ModalScreen
+  LoadingScreen,
+  HomeScreen
 }
