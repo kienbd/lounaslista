@@ -1,21 +1,15 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { Container, Button, Text } from 'native-base'
 
 export default class HomeScreen extends Component {
   render() {
-    const { viewStyles } = styles
     return (
-      <View style={viewStyles}>
-        <Text> Home </Text>
-      </View>
+      <Container>
+        <Button>
+          <Text> Home </Text>
+        </Button>
+      </Container>
     )
   }
 }
 
-const styles = {
-  viewStyles: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-}
