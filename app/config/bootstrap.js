@@ -1,7 +1,8 @@
-import * as Expo from 'expo'
+import { Font } from 'expo'
 import React, { Component } from 'react'
 import { StyleProvider } from 'native-base'
 import getTheme from '../theme/components'
+import LoadingScreen from '../screens/LoadingScreen'
 
 import Routes from './routes'
 
@@ -16,7 +17,7 @@ export default class Bootstrap extends Component {
     this.loadFonts()
   }
   async loadFonts() {
-    await Expo.Font.loadAsync({
+    await Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
       Ionicons: require('@expo/vector-icons/fonts/Ionicons.ttf')
@@ -25,7 +26,7 @@ export default class Bootstrap extends Component {
   }
   render() {
     if (!this.state.isReady) {
-      return <Expo.AppLoading />
+      return <LoadingScreen />
     }
     return (
       <StyleProvider style={getTheme()}>
