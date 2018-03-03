@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Content, Picker, Form, Button, Text } from 'native-base'
-import { View, ScrollView, StatusBar } from 'react-native'
+import { View, FlatList, StatusBar } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 
 import Menu from '../components/Menu'
@@ -15,7 +15,7 @@ export default class HomeScreen extends Component {
       restaurants: [],
       selected: ''
     }
-    this.scrollView = null
+    this.flatList = null
   }
 
   onValueChangeHandler = selected => {
@@ -24,11 +24,11 @@ export default class HomeScreen extends Component {
     })
     const { restaurants } = this.state
     const index = restaurants.indexOf(restaurants.find(e => e.title === selected))
-    const _scrollView = this.scrollView
+    const _flatList = this.flatList
     const _scrollOffset = 420
 
-    if (_scrollView) {
-      _scrollView.scrollTo({y: _scrollOffset * index, animated: true})
+    if (_flatList) {
+      _flatList.scrollToIndex({index, animated: true})
     }
   }
 
@@ -82,15 +82,13 @@ export default class HomeScreen extends Component {
       <Container>
         <StatusBar backgroundColor='blue' barStyle='dark-content' />
         <View style={styles.contentStyles}>
-          <ScrollView
+          <FlatList
+            data={restaurants}
+            renderItem={({ item }) => <Menu restaurant={item} />}
             showsVerticalScrollIndicator={false}
-            style={styles.menusViewStyles}
-            ref={scrollView => (this.scrollView = scrollView)}
-          >
-            {
-              restaurants.map((e, index) => <Menu key={index} restaurant={e} />)
-            }
-          </ScrollView>
+            keyExtractor={item => item.title}
+            ref={(ref) => { this.flatList = ref }}
+          />
         </View>
       </Container>
     )

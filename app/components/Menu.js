@@ -22,6 +22,8 @@ export default class Menu extends Component {
     if (restaurant == null)
       return null
     const { title, menu } = restaurant
+    if (title == null || menu == null)
+      return null
     return (
       <View style={styles.containerStyles}>
         <View style={styles.linkStyles}>
