@@ -31,19 +31,27 @@ export default class Menu extends Component {
         </View>
         <View style={styles.listContainerStyles}>
           <List>
-            <ListItem itemDivider style={styles.listItemDividerStyles}>
-              <Body>
-                <CenteredText style={styles.listItemDividerTextStyles}> Vegetatarian Lunch </CenteredText>
-              </Body>
-            </ListItem>
+            {
+              menu.vlunch.length > 0
+                ? <ListItem itemDivider style={styles.listItemDividerStyles}>
+                  <Body>
+                    <CenteredText style={styles.listItemDividerTextStyles}> Vegetatarian Lunch </CenteredText>
+                  </Body>
+                </ListItem>
+                : null
+            }
             {
               this.renderMenu(menu.vlunch)
             }
-            <ListItem itemDivider style={styles.listItemDividerStyles}>
-              <Body>
-                <CenteredText style={styles.listItemDividerTextStyles}>  Lunch </CenteredText>
-              </Body>
-            </ListItem>
+            {
+              menu.lunch.length > 0
+                ? <ListItem itemDivider style={styles.listItemDividerStyles}>
+                  <Body>
+                    <CenteredText style={styles.listItemDividerTextStyles}> Lunch </CenteredText>
+                  </Body>
+                </ListItem>
+                : null
+            }
             {
               this.renderMenu(menu.lunch)
             }

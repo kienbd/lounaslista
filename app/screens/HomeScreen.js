@@ -6,7 +6,6 @@ import Menu from '../components/Menu'
 import SearchBox from '../components/SearchBox'
 
 import Restaurants from '../drivers'
-import Dipoli from '../drivers/dipoli'
 
 export default class HomeScreen extends Component {
   constructor() {
@@ -20,7 +19,7 @@ export default class HomeScreen extends Component {
     return {
       header: (
         <View style={styles.headerStyles}>
-          <SearchBox />
+          <SearchBox items={Restaurants.map(e => e.title)}/>
           <View style={{marginTop: 20, flexDirection: 'row'}}>
             <Button bordered dark style={styles.topBtnStyles}>
               <Text uppercase={false} style={styles.topBtnTextStyles}> Chicken </Text>
@@ -40,9 +39,11 @@ export default class HomeScreen extends Component {
   componentDidMount() {
     Restaurants.forEach(ed => {
       ed.driver.bootstrap().then(restaurant => {
-        let updated = this.state.restaurants.slice()
-        updated.push(restaurant)
-        this.setState({restaurants: updated})
+        if (restaurant) {
+          let updated = this.state.restaurants.slice()
+          updated.push(restaurant)
+          this.setState({restaurants: updated})
+        }
       })
     })
   }

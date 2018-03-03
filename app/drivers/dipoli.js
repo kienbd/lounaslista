@@ -9,7 +9,7 @@ const config = {
 
 const bootstrap = () => {
   return axios.get(config.en)
-    .then((response) => {
+    .then(response => {
       if (response.status === 200) {
         const { data } = response
         const restaurant = new Restaurant({title: data.RestaurantName})
@@ -21,7 +21,10 @@ const bootstrap = () => {
           return menuDate.toDateString() === today.toDateString()
         })
 
-        todayMenu.SetMenus.map(e => {
+        if (todayMenu == null)
+          return null
+
+        todayMenu.SetMenus.forEach(e => {
           const menuItem = Restaurant.createItem(...e.Components)
           if (e.Name === 'Vegetarian lunch')
             restaurant.addVlunch(menuItem)

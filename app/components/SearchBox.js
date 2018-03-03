@@ -17,6 +17,7 @@ export default class SearchBox extends Component {
   }
 
   render() {
+    const { items } = this.props
     return (
       <View style={styles.pickerContainerStyles}>
         <Icon style={styles.iconStyles} name="ios-search" />
@@ -29,10 +30,9 @@ export default class SearchBox extends Component {
           style={styles.pickerStyles}
         >
           <Item label="Select a Restaurant" value="key0" />
-          <Item label="ATM Card" value="key1" />
-          <Item label="Debit Card" value="key2" />
-          <Item label="Credit Card" value="key3" />
-          <Item label="Net Banking" value="key4" />
+          {
+            items.map((e, index) => <Item key={index} label={e} value={e} />)
+          }
         </Picker>
       </View>
     )
