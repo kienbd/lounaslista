@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Container, Content, Picker, Form, Button, Text } from 'native-base'
 import { View, ScrollView, StatusBar } from 'react-native'
+import { StackNavigator } from 'react-navigation'
 
 import Menu from '../components/Menu'
 import SearchBox from '../components/SearchBox'
@@ -11,15 +12,35 @@ export default class HomeScreen extends Component {
   constructor() {
     super()
     this.state = {
-      restaurants: []
+      restaurants: [],
+      selected: ''
+    }
+    this.scrollView = null
+  }
+
+  onValueChangeHandler = selected => {
+    this.setState({
+      selected
+    })
+    const { restaurants } = this.state
+    const index = restaurants.indexOf(restaurants.find(e => e.title === selected))
+    const _scrollView = this.scrollView
+    const _scrollOffset = 420
+
+    if (_scrollView) {
+      _scrollView.scrollTo({y: _scrollOffset * index, animated: true})
     }
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
+    const params = navigation.state.params || {}
     return {
       header: (
         <View style={styles.headerStyles}>
-          <SearchBox items={Restaurants.map(e => e.title)}/>
+          <SearchBox
+            items={Restaurants.map(e => e.title)}
+            onUpdate={params.changeSelectorValue}
+          />
           <View style={{marginTop: 20, flexDirection: 'row'}}>
             <Button bordered dark style={styles.topBtnStyles}>
               <Text uppercase={false} style={styles.topBtnTextStyles}> Chicken </Text>
@@ -34,6 +55,13 @@ export default class HomeScreen extends Component {
         </View>
       )
     }
+  }
+
+  componentWillMount() {
+    const { navigation } = this.props
+    navigation.setParams({
+      changeSelectorValue: this.onValueChangeHandler
+    })
   }
 
   componentDidMount() {
@@ -53,13 +81,17 @@ export default class HomeScreen extends Component {
     return (
       <Container>
         <StatusBar backgroundColor='blue' barStyle='dark-content' />
-        <Content padder>
-          <ScrollView showsVerticalScrollIndicator={false} style={styles.menusViewStyles}>
+        <View style={styles.contentStyles}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={styles.menusViewStyles}
+            ref={scrollView => (this.scrollView = scrollView)}
+          >
             {
               restaurants.map((e, index) => <Menu key={index} restaurant={e} />)
             }
           </ScrollView>
-        </Content>
+        </View>
       </Container>
     )
   }
@@ -74,6 +106,11 @@ const styles = {
     height: 170,
     backgroundColor: '#FCFCFF',
     elevation: 2
+  },
+  contentStyles: {
+    padding: 5,
+    paddingHorizontal: 20,
+    flex: 1
   },
   menusViewStyles: {
     flex: 1,

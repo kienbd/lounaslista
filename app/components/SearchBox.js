@@ -11,9 +11,11 @@ export default class SearchBox extends Component {
   }
 
   handleOnChange = selected => {
+    const { onUpdate } = this.props
     this.setState({
       selected
     })
+    onUpdate(selected)
   }
 
   render() {
@@ -29,7 +31,7 @@ export default class SearchBox extends Component {
           placeholder="Select a Restaurant"
           style={styles.pickerStyles}
         >
-          <Item label="Select a Restaurant" value="key0" />
+          <Item label="Select a Restaurant" value="all" />
           {
             items.map((e, index) => <Item key={index} label={e} value={e} />)
           }
