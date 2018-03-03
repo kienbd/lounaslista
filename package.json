@@ -21,6 +21,7 @@
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "scripts": {
+    "console": "./node_modules/babel-cli/bin/babel-node.js",
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",
     "android": "react-native-scripts android",
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.3.1",
+    "axios": "^0.18.0",
     "expo": "^25.0.0",
     "lodash": "^4.17.5",
     "moment": "^2.20.1",

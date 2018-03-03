@@ -5,35 +5,17 @@ import { View, ScrollView, StatusBar } from 'react-native'
 import Menu from '../components/Menu'
 import SearchBox from '../components/SearchBox'
 
-const dipoli = {
-  title: 'Dipoli',
-  menu: {
-    vlunch: [
-      {
-        components: [
-          'Whole grain wheat grits (* ,A ,G ,L ,M ,Veg ,VS)',
-          'Ratatouille (* ,A ,G ,L ,M ,Veg ,VS)'
-        ]
-      }
-    ],
-    lunch: [
-      {
-        components: [
-          'Fish patties (* ,A ,G ,L ,M)',
-          'Sour cream sauce with dill (A ,G ,L)',
-          'Mashed potatoes (* ,A ,G ,L)'
-        ]
-      },
-      {
-        components: [
-          'Swedish hash (sausage and potatoes) (A ,L)'
-        ]
-      }
-    ]
-  }
-}
+import Restaurants from '../drivers'
+import Dipoli from '../drivers/dipoli'
 
 export default class HomeScreen extends Component {
+  constructor() {
+    super()
+    this.state = {
+      restaurants: []
+    }
+  }
+
   static navigationOptions = ({ navigation, navigationOptions }) => {
     return {
       header: (
@@ -54,14 +36,27 @@ export default class HomeScreen extends Component {
       )
     }
   }
+
+  componentDidMount() {
+    Restaurants.forEach(ed => {
+      ed.driver.bootstrap().then(restaurant => {
+        let updated = this.state.restaurants.slice()
+        updated.push(restaurant)
+        this.setState({restaurants: updated})
+      })
+    })
+  }
+
   render() {
+    const { restaurants } = this.state
     return (
       <Container>
         <StatusBar backgroundColor='blue' barStyle='dark-content' />
         <Content padder>
           <ScrollView showsVerticalScrollIndicator={false} style={styles.menusViewStyles}>
-            <Menu restaurant={dipoli} />
-            <Menu restaurant={dipoli} />
+            {
+              restaurants.map((e, index) => <Menu key={index} restaurant={e} />)
+            }
           </ScrollView>
         </Content>
       </Container>
