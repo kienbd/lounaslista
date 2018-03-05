@@ -5501,10 +5501,6 @@ react-native@0.52.0:
     xmldoc "^0.4.0"
     yargs "^9.0.0"
 
-react-navigation-addons@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/react-navigation-addons/-/react-navigation-addons-0.0.0.tgz#f56478227368799a90c67411de53ea997d2948d1"
-
 react-navigation@^1.2.1:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-1.3.2.tgz#b2f690f7dd7d9821573460829ba492789ebdd5fd"
