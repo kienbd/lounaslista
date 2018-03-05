@@ -2,6 +2,7 @@ import Dipoli from './dipoli'
 import CSBuilding from './csbuilding'
 import Kvarkki from './kvarkki'
 import Taffa from './taffa'
+import Hamalais from './hamalais'
 
 export default Restaurants = [
   {
@@ -19,5 +20,9 @@ export default Restaurants = [
   {
     title: 'Taffa',
     driver: Taffa
+  },
+  {
+    title: 'Hämäläis Osakunta',
+    driver: Hamalais
   }
 ]

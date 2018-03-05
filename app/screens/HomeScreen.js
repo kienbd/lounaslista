@@ -68,8 +68,10 @@ export default class HomeScreen extends Component {
 
   onTitleClickHandler = () => {
     const { navigation } = this.props
+    const { restaurants } = this.state
     navigation.navigate('Modal', {
-      onGoingBack: this.onValueChangeHandler
+      onGoingBack: this.onValueChangeHandler,
+      restaurants: restaurants
     })
   }
 

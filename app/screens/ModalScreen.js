@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Button } from 'react-native'
 import { StackNavigator } from 'react-navigation'
-import { Container, Content, List, ListItem, Text, Icon, Body, Right } from 'native-base'
+import { Container, Content, List, ListItem, Text, Icon, Right, Left, H1 } from 'native-base'
 
 
 export default class ModalScreen extends Component {
@@ -12,33 +12,31 @@ export default class ModalScreen extends Component {
     onGoingBack(selected)
   }
 
+  renderListItem = title => (
+    <ListItem onPress={() => this.onListPress(title)} key={title}>
+      <Left>
+        <Text>{title}</Text>
+      </Left>
+      <Right>
+        <Icon name="arrow-forward" />
+      </Right>
+    </ListItem>
+  )
+
   render() {
     const { navigation } = this.props
+    const { restaurants } = navigation.state.params
     return (
       <Container>
         <Content>
-          <List>
-            <ListItem itemDivider>
-              <Text>Aaron Bennet</Text>
-            </ListItem>
-            <ListItem onPress={() => this.onListPress('Dipoli')}>
-              <Body>
-                <Text>A</Text>
-              </Body>
-              <Right>
-                <Icon name="arrow-forward" />
-              </Right>
-            </ListItem>
-            <ListItem onPress={() => this.onListPress('Taffa')}>
-              <Text>Ali Connors</Text>
-            </ListItem>
-            <ListItem itemDivider>
-              <Text>B</Text>
-            </ListItem>
-            <ListItem>
-              <Text>Bradley Horowitz</Text>
-            </ListItem>
-          </List>
+          <H1 style={styles.pageHeaderStyles}> Restaurants List </H1>
+          <View style={styles.viewStyles}>
+            <List>
+              {
+                restaurants.map(e => this.renderListItem(e.title))
+              }
+            </List>
+          </View>
         </Content>
       </Container>
     )
@@ -46,9 +44,12 @@ export default class ModalScreen extends Component {
 }
 
 const styles = {
+  pageHeaderStyles: {
+    alignSelf: 'center',
+    marginTop: 80
+  },
   viewStyles: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+    marginTop: 40,
+    flex: 1
   }
 }
