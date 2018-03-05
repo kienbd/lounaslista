@@ -12,7 +12,7 @@ const bootstrap = () => {
   const today = new Date()
   const year = today.getFullYear()
   const month = today.getMonth() + 1
-  const date = today.getDate() - 1
+  const date = today.getDate()
 
   const url = `${config.root}/${year}/${month}/${date}/${config.en}`
   return axios.get(url)

@@ -12,10 +12,9 @@ const bootstrap = () => {
   const today = new Date()
   const year = today.getFullYear()
   const month = today.getMonth() + 1
-  const date = 6
+  const date = today.getDate()
 
   const url = `${config.root}/${config.en}/${date}/${month}/${year}`
-  console.log(url)
   return axios.get(url)
     .then(response => {
       if (response.status === 200) {

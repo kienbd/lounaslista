@@ -18,20 +18,6 @@ export default class HomeScreen extends Component {
     this.flatList = null
   }
 
-  onValueChangeHandler = selected => {
-    this.setState({
-      selected
-    })
-    const { restaurants } = this.state
-    const index = restaurants.indexOf(restaurants.find(e => e.title === selected))
-    const _flatList = this.flatList
-    const _scrollOffset = 420
-
-    if (_flatList) {
-      _flatList.scrollToIndex({index, animated: true})
-    }
-  }
-
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const params = navigation.state.params || {}
     return {
@@ -56,6 +42,37 @@ export default class HomeScreen extends Component {
       )
     }
   }
+
+  onValueChangeHandler = selected => {
+    this.setState({
+      selected
+    })
+  }
+
+  componentWillUpdate = (nextProps, nextStates) => {
+    const { selected, restaurants } = nextStates
+    const { currentSelected } = this.state
+    if (selected !== '' && selected !== currentSelected) {
+      const restaurant = restaurants.find(e => e.title === selected)
+      if (restaurant) {
+        const index = restaurants.indexOf(restaurant)
+        const _flatList = this.flatList
+        const _scrollOffset = 420
+
+        if (_flatList) {
+          _flatList.scrollToIndex({index, animated: true})
+        }
+      }
+    }
+  }
+
+  onTitleClickHandler = () => {
+    const { navigation } = this.props
+    navigation.navigate('Modal', {
+      onGoingBack: this.onValueChangeHandler
+    })
+  }
+
 
   componentWillMount() {
     const { navigation } = this.props
@@ -84,7 +101,7 @@ export default class HomeScreen extends Component {
         <View style={styles.contentStyles}>
           <FlatList
             data={restaurants}
-            renderItem={({ item }) => <Menu restaurant={item} />}
+            renderItem={({ item }) => <Menu restaurant={item} onTitleClick={this.onTitleClickHandler} />}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.title}
             ref={(ref) => { this.flatList = ref }}

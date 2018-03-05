@@ -17,6 +17,11 @@ export default class Menu extends Component {
     )
   })
 
+  onButtonPress = () => {
+    const { onTitleClick } = this.props
+    onTitleClick()
+  }
+
   render() {
     const { restaurant } = this.props
     if (restaurant == null)
@@ -27,7 +32,7 @@ export default class Menu extends Component {
     return (
       <View style={styles.containerStyles}>
         <View style={styles.linkStyles}>
-          <Button transparent dark large style={styles.linkButtonStyles}>
+          <Button transparent dark large style={styles.linkButtonStyles} onPress={this.onButtonPress}>
             <Text style={styles.linkTextStyles} uppercase={false}> { title }</Text>
           </Button>
         </View>

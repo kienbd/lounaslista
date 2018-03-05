@@ -2,7 +2,7 @@ import React from 'react'
 import { StackNavigator } from 'react-navigation'
 import Screens from '../../screens'
 
-export default StackNavigator(
+const MainStack = StackNavigator(
   {
     Home: {
       screen: Screens.HomeScreen
@@ -12,3 +12,21 @@ export default StackNavigator(
     initialRouteName: 'Home'
   }
 )
+
+const RouteStack = StackNavigator(
+  {
+    MainStack: {
+      screen: MainStack
+    },
+    Modal: {
+      screen: Screens.ModalScreen
+    }
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none'
+  }
+)
+
+
+export default RouteStack
