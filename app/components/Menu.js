@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { Text, Button, List, ListItem, Body, Title } from 'native-base'
+import { Text, Button, List, ListItem, Body, Title, Icon } from 'native-base'
 
 import CenteredText from '../components/CenteredText'
 
 export default class Menu extends Component {
+  renderIcon = title => {
+    switch (title) {
+    case 'chicken':
+      return <Icon name='duck' style={styles.iconStyles}/>
+    case 'pork/beef':
+      return <Icon name='cow' />
+    case 'fish':
+      return <Icon name='fish' />
+    }
+  }
+
   renderMenu = menu => menu.map((e, index) => {
     return (
       <ListItem key={index}>
@@ -13,7 +24,7 @@ export default class Menu extends Component {
             e.components.map((elem, cindex) => <CenteredText key={cindex}> {elem} </CenteredText>)
           }
           {
-            e.properties.map((elem, cindex) => <CenteredText key={cindex}> {elem} </CenteredText>)
+            e.properties.map((elem, cindex) => <CenteredText key={cindex}> {this.renderIcon(elem)} </CenteredText>)
           }
         </Body>
       </ListItem>
@@ -101,5 +112,8 @@ const styles = {
   },
   listItemDividerTextStyles: {
     fontWeight: 'bold'
+  },
+  iconStyles: {
+    color: '#333333'
   }
 }

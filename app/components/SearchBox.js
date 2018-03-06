@@ -22,7 +22,7 @@ export default class SearchBox extends Component {
     const { items } = this.props
     return (
       <View style={styles.pickerContainerStyles}>
-        <Icon style={styles.iconStyles} name="ios-search" />
+        <Icon style={styles.iconStyles} name="search-web" />
         <Picker
           iosHeader="Select one"
           mode="dropdown"

@@ -45,14 +45,17 @@ export default class Restaurant {
       vlunch: [],
       lunch: []
     }
+    this.properties = []
   }
 
   addVlunch(item) {
     this.menu.vlunch.push(item)
+    this.properties = this.properties.concat(item.properties)
   }
 
   addLunch(item) {
     this.menu.lunch.push(item)
+    this.properties = this.properties.concat(item.properties)
   }
 
   static createItem(...meal) {
@@ -61,11 +64,13 @@ export default class Restaurant {
       const val = keywords[key]
       val.forEach(val => {
         meal.forEach(m => {
-          if (m.toLowerCase().indexOf(val) !== -1)
+          if (m.toLowerCase().indexOf(val) !== -1) {
             props.push(key)
+          }
         })
       })
     })
+
     return {
       components: meal,
       properties: props

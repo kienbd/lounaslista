@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Content, Picker, Form, Button, Text } from 'native-base'
+import { Container, Content, Picker, Form, Button, Text, Icon } from 'native-base'
 import { View, FlatList, StatusBar } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 
@@ -28,14 +28,23 @@ export default class HomeScreen extends Component {
             onUpdate={params.changeSelectorValue}
           />
           <View style={{marginTop: 20, flexDirection: 'row'}}>
-            <Button bordered dark style={styles.topBtnStyles}>
-              <Text uppercase={false} style={styles.topBtnTextStyles}> Chicken </Text>
+            <Button iconLeft bordered dark style={{...styles.topBtnStyles, width: 100}}>
+              <Icon name='duck'/>
+              <Text uppercase={false} style={{...styles.topBtnTextStyles, width: 90}}>
+                Chicken
+              </Text>
             </Button>
-            <Button bordered dark style={styles.topBtnStyles}>
-              <Text uppercase={false} style={styles.topBtnTextStyles}> Beef/ Pork </Text>
+            <Button iconLeft bordered dark style={styles.topBtnStyles}>
+              <Icon name='cow' />
+              <Text uppercase={false} style={styles.topBtnTextStyles}>
+                Beef/ Pork
+              </Text>
             </Button>
-            <Button bordered dark style={styles.topBtnStyles}>
-              <Text uppercase={false} style={styles.topBtnTextStyles}> Fish </Text>
+            <Button iconLeft bordered dark style={styles.topBtnStyles}>
+              <Icon name='fish' />
+              <Text uppercase={false} style={styles.topBtnTextStyles}>
+                Fish
+              </Text>
             </Button>
           </View>
         </View>
@@ -134,16 +143,18 @@ const styles = {
     marginTop: 10
   },
   topBtnStyles: {
-    minWidth: 60,
+    width: 90,
     borderColor: '#DEDEDE',
     elevation: 1,
     marginRight: 10,
     borderRadius: 4
   },
   topBtnTextStyles: {
-    fontSize: 12,
+    width: 80,
+    fontSize: 11,
     fontWeight: 'bold',
-    color: '#333333'
+    color: '#333333',
+    flexWrap: 'wrap'
   }
 }
 
