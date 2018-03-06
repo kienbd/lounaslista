@@ -10,7 +10,10 @@ export default class Menu extends Component {
       <ListItem key={index}>
         <Body>
           {
-            e.components.map((e, cindex) => <CenteredText key={cindex}> {e} </CenteredText>)
+            e.components.map((elem, cindex) => <CenteredText key={cindex}> {elem} </CenteredText>)
+          }
+          {
+            e.properties.map((elem, cindex) => <CenteredText key={cindex}> {elem} </CenteredText>)
           }
         </Body>
       </ListItem>

@@ -32,10 +32,10 @@ export default class HomeScreen extends Component {
               <Text uppercase={false} style={styles.topBtnTextStyles}> Chicken </Text>
             </Button>
             <Button bordered dark style={styles.topBtnStyles}>
-              <Text uppercase={false} style={styles.topBtnTextStyles}> Beef </Text>
+              <Text uppercase={false} style={styles.topBtnTextStyles}> Beef/ Pork </Text>
             </Button>
             <Button bordered dark style={styles.topBtnStyles}>
-              <Text uppercase={false} style={styles.topBtnTextStyles}> Pork </Text>
+              <Text uppercase={false} style={styles.topBtnTextStyles}> Fish </Text>
             </Button>
           </View>
         </View>

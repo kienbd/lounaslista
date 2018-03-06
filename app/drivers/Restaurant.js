@@ -28,6 +28,12 @@
   }
 */
 
+const keywords = {
+  fish: ['fish'],
+  'pork/ beef': ['meat'],
+  chicken: ['chicken']
+}
+
 export default class Restaurant {
   constructor(restaurant) {
     const {
@@ -50,8 +56,19 @@ export default class Restaurant {
   }
 
   static createItem(...meal) {
+    let props = []
+    Object.keys(keywords).forEach(key => {
+      const val = keywords[key]
+      val.forEach(val => {
+        meal.forEach(m => {
+          if (m.toLowerCase().indexOf(val) !== -1)
+            props.push(key)
+        })
+      })
+    })
     return {
-      components: meal
+      components: meal,
+      properties: props
     }
   }
 }
