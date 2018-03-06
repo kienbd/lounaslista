@@ -3,19 +3,9 @@ import { View, Button } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { Container, Content, List, ListItem, Text, Icon, Right, Left, H1 } from 'native-base'
 
+import { renderCategoryIcon } from '../utils/rendering'
 
 export default class ModalScreen extends Component {
-  renderIcon = title => {
-    switch (title) {
-    case 'chicken':
-      return <Icon key={title} name='duck' style={styles.iconstyles}/>
-    case 'pork/beef':
-      return <Icon key={title} name='cow' style={styles.iconstyles}/>
-    case 'fish':
-      return <Icon key={title} name='fish' style={styles.iconstyles}/>
-    }
-  }
-
   onListPress = selected => {
     const { navigation } = this.props
     const { onGoingBack } = navigation.state.params
@@ -30,7 +20,7 @@ export default class ModalScreen extends Component {
           {title}
         </Text>
         <Text style={{marginLeft: 20}}>
-          {properties.map(icon => this.renderIcon(icon))}
+          {properties.map(icon => renderCategoryIcon(icon, styles))}
         </Text>
       </Left>
       <Right>
@@ -69,6 +59,6 @@ const styles = {
     flex: 1
   },
   iconStyles: {
-    fontSize: 10
+    fontSize: 14
   }
 }
