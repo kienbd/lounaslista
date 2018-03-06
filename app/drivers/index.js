@@ -3,6 +3,7 @@ import CSBuilding from './csbuilding'
 import Kvarkki from './kvarkki'
 import Taffa from './taffa'
 import Hamalais from './hamalais'
+import UniCafe from './unicafe'
 
 export default Restaurants = [
   {
@@ -24,5 +25,9 @@ export default Restaurants = [
   {
     title: 'Hämäläis Osakunta',
     driver: Hamalais
+  },
+  {
+    title: 'UniCafe City Centre',
+    driver: UniCafe
   }
 ]

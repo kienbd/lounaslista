@@ -4,8 +4,9 @@ import _ from 'lodash'
 import Restaurant from './Restaurant'
 
 const config = {
-  title: 'Hämäläis Osakunta',
-  root: 'http://www.hys.net/ruokalista.xml'
+  title: 'UniCafe City Centre',
+  en: 'https://messi.hyyravintolat.fi/rss/eng/9',
+  fi: 'https://messi.hyyravintolat.fi/rss/fin/9'
 }
 
 const bootstrap = () => {
@@ -14,11 +15,10 @@ const bootstrap = () => {
   const month = today.getMonth() + 1
   const date = today.getDate()
 
-  const url = `${config.root}`
+  const url = `${config.en}`
   const paddedMonth = _.padStart(month, 2, '0')
   const paddedDate = _.padStart(date, 2, '0')
   const string = `${paddedDate}.${paddedMonth}`
-  console.log(string)
   return axios({
     url,
     method: 'get',
@@ -41,9 +41,9 @@ const bootstrap = () => {
         return null
 
       const { description } = todayMenu
-      description._cdata.split(',<br />\r\n').forEach(e => {
-        if (e.length > 0) {
-          const menuItem = Restaurant.createItem(e)
+      description._text.split('.').forEach(e => {
+        if (e.length > 0 && e.indexOf('Aukio Edullisesti') > -1) {
+          const menuItem = Restaurant.createItem(_.replace(e, 'Aukio Edullisesti: ', ''))
           restaurant.addLunch(menuItem)
         }
       })
@@ -52,6 +52,6 @@ const bootstrap = () => {
   })
 }
 
-export default Hamalais = {
+export default UniCafe = {
   bootstrap
 }
