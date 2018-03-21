@@ -1,5 +1,15 @@
-{
-  "expo": {
-    "sdkVersion": "25.0.0"
-  }
-}
+ {
+   "expo": {
+    "name": "Lounalista",
+    "icon": "./app/assets/icons/icon.png",
+    "version": "0.1.0",
+    "slug": "lounalista",
+    "sdkVersion": "25.0.0",
+    "ios": {
+      "bundleIdentifier": "com.kienbd.lounaslista"
+    },
+    "android": {
+      "package": "com.kienbd.lounaslista"
+    }
+   }
+ }

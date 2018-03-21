@@ -20,7 +20,8 @@ export default class Bootstrap extends Component {
     await Font.loadAsync({
       Roboto: require('native-base/Fonts/Roboto.ttf'),
       Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
-      MaterialCommunityIcons: require('@expo/vector-icons/fonts/MaterialCommunityIcons.ttf')
+      MaterialCommunityIcons: require('@expo/vector-icons/fonts/MaterialCommunityIcons.ttf'),
+      MaterialDesignIcons: require('@expo/vector-icons/fonts/MaterialIcons.ttf')
     })
     this.setState({ isReady: true })
   }
