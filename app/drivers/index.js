@@ -10,12 +10,18 @@ export default drivers = {
   Dipoli,
   CSBuilding,
   Alvari,
-  Taffa
+  Taffa,
+  Kvarkki,
+  Hamalais,
+  UniCafe
 }
 
 export const restaurants = [
   Dipoli.config.title,
   CSBuilding.config.title,
   Alvari.config.title,
-  Taffa.config.title
+  Taffa.config.title,
+  Kvarkki.config.title,
+  Hamalais.config.title,
+  UniCafe.config.title
 ]

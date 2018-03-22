@@ -53,5 +53,6 @@ const bootstrap = () => {
 }
 
 export default UniCafe = {
+  config,
   bootstrap
 }

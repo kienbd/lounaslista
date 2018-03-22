@@ -54,36 +54,15 @@ export class HomeScreen extends Component {
     }
   }
 
-  onValueChangeHandler = selected => {
-    /*
-    this.setState({
-      selected
-    })
-    */
-  }
-
-  componentWillUpdate = (nextProps, nextStates) => {
-    /*
-    const { selected, restaurants } = nextStates
-    const { currentSelected } = this.state
-    if (selected !== '' && selected !== currentSelected) {
-      const restaurant = restaurants.find(e => e.title === selected)
-      if (restaurant) {
-        const index = restaurants.indexOf(restaurant)
-        const flatList = this.flatList
-
-        if (flatList) {
-          flatList.scrollToIndex({index, animated: true})
-        }
-      }
-    }
-    */
+  onSelectedRestaurantChangeHandler = selected => {
+    const { selectRestaurant } = this.props
+    selectRestaurant(selected)
   }
 
   onTitleClickHandler = () => {
     const { navigation, restaurants } = this.props
     navigation.navigate('Modal', {
-      onGoingBack: this.onValueChangeHandler,
+      onGoingBack: this.onSelectedRestaurantChangeHandler,
       restaurants: _.values(restaurants)
     })
   }
@@ -91,7 +70,7 @@ export class HomeScreen extends Component {
   componentWillMount() {
     const { navigation } = this.props
     navigation.setParams({
-      changeSelectorValue: this.onValueChangeHandler
+      changeSelectorValue: this.onSelectedRestaurantChangeHandler
     })
   }
 
@@ -99,6 +78,20 @@ export class HomeScreen extends Component {
     const { fetchAllRestaurants } = this.props
     fetchAllRestaurants()
   }
+
+  componentWillUpdate = (nextProps, nextStates) => {
+    const { selected } = nextProps
+    const { currentSelected } = this.props.selected
+    if (selected !== '' && selected !== currentSelected) {
+      const index = restaurantsList.indexOf(selected)
+      const flatList = this.flatList
+
+      if (flatList) {
+        flatList.scrollToIndex({index, animated: true})
+      }
+    }
+  }
+
 
   render() {
     const { restaurants } = this.props
@@ -130,7 +123,8 @@ const mapStateToProps = state => state.restaurants
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      fetchAllRestaurants: restaurantsActions.fetchAllRestaurants
+      fetchAllRestaurants: restaurantsActions.fetchAllRestaurants,
+      selectRestaurant: restaurantsActions.selectRestaurant
     }, dispatch
   )
 }

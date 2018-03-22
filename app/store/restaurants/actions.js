@@ -38,3 +38,12 @@ export function fetchRestaurant(restaurant) {
     }
   }
 }
+
+export function selectRestaurant(restaurant) {
+  return (dispatch) => {
+    dispatch({
+      type: types.RESTAURANT_SELECTED,
+      payload: restaurant
+    })
+  }
+}

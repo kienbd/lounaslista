@@ -2,7 +2,7 @@ import axios from 'axios'
 import Restaurant from './Restaurant'
 
 const config = {
-  title: ' Building',
+  title: 'Kvarkki',
   root: 'https://www.sodexo.fi/ruokalistat/output/daily_json/26521',
   en: 'en',
   fi: 'fi'
@@ -22,7 +22,8 @@ const bootstrap = () => {
         const { meta, courses } = data
         if (meta.length === 0 || courses.length === 0)
           return null
-        const restaurant = new Restaurant({title: meta.ref_title})
+        // const restaurant = new Restaurant({title: meta.ref_title})
+        const restaurant = new Restaurant({title: config.title})
 
         courses.forEach(e => {
           const properties = e.properties ? ` (${e.properties})` : ''
@@ -38,5 +39,6 @@ const bootstrap = () => {
 }
 
 export default Kvarkki = {
+  config,
   bootstrap
 }
