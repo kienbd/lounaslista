@@ -30,7 +30,7 @@
 
 const keywords = {
   fish: ['fish'],
-  'pork/ beef': ['meat'],
+  'pork/ beef': ['meat', 'pork', 'beef'],
   chicken: ['chicken']
 }
 
