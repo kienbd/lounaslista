@@ -2,30 +2,30 @@ import React, { Component } from 'react'
 import { Container, Content, Picker, Form, Button, Text, Icon } from 'native-base'
 import { View, FlatList, StatusBar } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+import { connect } from 'react-redux'
 
 import Menu from '../components/Menu'
 import SearchBox from '../components/SearchBox'
 
+import * as restaurantsActions from '../store/restaurants/actions'
+
 import Restaurants from '../drivers'
 
-export default class HomeScreen extends Component {
+export class HomeScreen extends Component {
   constructor() {
     super()
-    this.state = {
-      restaurants: [],
-      selected: ''
-    }
     this.flatList = null
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const params = navigation.state.params || {}
+    const items = navigation.state.items || ['Loading...']
     return {
       header: (
         <View style={styles.headerStyles}>
           <SearchBox
-            items={Restaurants.map(e => e.title)}
             onUpdate={params.changeSelectorValue}
+            items = {items}
           />
           <View style={{marginTop: 20, flexDirection: 'row'}}>
             <Button iconLeft bordered dark style={{...styles.topBtnStyles, width: 100}}>
@@ -53,12 +53,15 @@ export default class HomeScreen extends Component {
   }
 
   onValueChangeHandler = selected => {
+    /*
     this.setState({
       selected
     })
+    */
   }
 
   componentWillUpdate = (nextProps, nextStates) => {
+    /*
     const { selected, restaurants } = nextStates
     const { currentSelected } = this.state
     if (selected !== '' && selected !== currentSelected) {
@@ -72,6 +75,7 @@ export default class HomeScreen extends Component {
         }
       }
     }
+    */
   }
 
   onTitleClickHandler = () => {
@@ -92,19 +96,11 @@ export default class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    Restaurants.forEach(ed => {
-      ed.driver.bootstrap().then(restaurant => {
-        if (restaurant) {
-          let updated = this.state.restaurants.slice()
-          updated.push(restaurant)
-          this.setState({restaurants: updated})
-        }
-      })
-    })
+    this.props.dispatch(restaurantsActions.fetchAllRestaurants())
   }
 
   render() {
-    const { restaurants } = this.state
+    const restaurants = []
     return (
       <Container>
         <StatusBar backgroundColor='blue' barStyle='dark-content' />
@@ -121,6 +117,16 @@ export default class HomeScreen extends Component {
     )
   }
 }
+
+const mapStatetoProps = state => {
+  return {
+    fetching: state.fetching,
+    fetched: state.fetched,
+    restaurants: state.restaurants
+  }
+}
+
+export default connect(mapStatetoProps)(HomeScreen)
 
 
 const styles = {

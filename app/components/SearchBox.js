@@ -33,7 +33,9 @@ export default class SearchBox extends Component {
         >
           <Item label="Select a Restaurant" value="all" />
           {
-            items.map((e, index) => <Item key={index} label={e} value={e} />)
+            items
+              ? items.map((e, index) => <Item key={index} label={e} value={e} />)
+              : null
           }
         </Picker>
       </View>
