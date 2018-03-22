@@ -4,6 +4,7 @@ import Kvarkki from './kvarkki'
 import Taffa from './taffa'
 import Hamalais from './hamalais'
 import UniCafe from './unicafe'
+import Alvari from './alvari'
 
 export default Restaurants = [
   {
@@ -29,5 +30,9 @@ export default Restaurants = [
   {
     title: 'UniCafe City Centre',
     driver: UniCafe
+  },
+  {
+    title: 'Alvari',
+    driver: Alvari
   }
 ]
