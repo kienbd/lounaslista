@@ -4,6 +4,7 @@ import _ from 'lodash'
 const initialState = {
   fetching: false,
   fetched: false,
+  num: 0,
   selected: '',
   restaurants: {}
 }
@@ -22,7 +23,7 @@ export default function reduce(state = initialState, action) {
       const restaurant = {}
       restaurant[action.payload.title] = action.payload
       const restaurants = _.merge(state.restaurants, restaurant)
-      return { ...state, restaurants: restaurants }
+      return { ...state, restaurants: restaurants, fetching: true, num: state.num + 1 }
     case types.ALL_RESTAURANTS_FETCHED:
       return {...state, fetching: false, fetched: true}
     case types.RESTAURANT_SELECTED:

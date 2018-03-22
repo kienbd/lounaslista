@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Content, Picker, Form, Button, Text, Icon } from 'native-base'
+import { Container, Content, Picker, Form, Button, Text, Icon, Toast } from 'native-base'
 import { View, FlatList, StatusBar } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
@@ -17,6 +17,9 @@ export class HomeScreen extends Component {
   constructor() {
     super()
     this.flatList = null
+    this.state = {
+      showToast: false
+    }
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -63,7 +66,7 @@ export class HomeScreen extends Component {
     const { navigation, restaurants } = this.props
     navigation.navigate('Modal', {
       onGoingBack: this.onSelectedRestaurantChangeHandler,
-      restaurants: _.values(restaurants)
+      restaurants: _.values(_.filter(restaurants, e => !e.error))
     })
   }
 
@@ -80,7 +83,7 @@ export class HomeScreen extends Component {
   }
 
   componentWillUpdate = (nextProps, nextStates) => {
-    const { selected } = nextProps
+    const { selected, fetched, restaurants } = nextProps
     const { currentSelected } = this.props.selected
     if (selected !== '' && selected !== currentSelected) {
       const index = restaurantsList.indexOf(selected)
@@ -89,6 +92,15 @@ export class HomeScreen extends Component {
       if (flatList) {
         flatList.scrollToIndex({index, animated: true})
       }
+    }
+    if (fetched === true) {
+      const size = _.size(_.filter(restaurants, e => !e.error))
+      Toast.show({
+        text: `Loaded ${size} restaurants Successfully !`,
+        position: 'bottom',
+        type: 'success',
+        duration: 1000
+      })
     }
   }
 

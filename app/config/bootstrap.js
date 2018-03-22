@@ -1,6 +1,6 @@
 import { Font } from 'expo'
 import React, { Component } from 'react'
-import { StyleProvider } from 'native-base'
+import { StyleProvider, Root } from 'native-base'
 import { Provider } from 'react-redux'
 import getTheme from '../theme/components'
 import LoadingScreen from '../screens/LoadingScreen'
@@ -34,7 +34,9 @@ export default class Bootstrap extends Component {
     return (
       <Provider store={store}>
         <StyleProvider style={getTheme()}>
-          <Routes />
+          <Root>
+            <Routes />
+          </Root>
         </StyleProvider>
       </Provider>
     )

@@ -20,7 +20,7 @@ export default class ModalScreen extends Component {
           {title}
         </Text>
         <Text style={{marginLeft: 20}}>
-          {properties.map(icon => renderCategoryIcon(icon, styles))}
+          {properties.map((icon, index) => renderCategoryIcon(index, icon, styles))}
         </Text>
       </Left>
       <Right>
