@@ -65,11 +65,10 @@ export default class HomeScreen extends Component {
       const restaurant = restaurants.find(e => e.title === selected)
       if (restaurant) {
         const index = restaurants.indexOf(restaurant)
-        const _flatList = this.flatList
-        const _scrollOffset = 420
+        const flatList = this.flatList
 
-        if (_flatList) {
-          _flatList.scrollToIndex({index, animated: true})
+        if (flatList) {
+          flatList.scrollToIndex({index, animated: true})
         }
       }
     }
@@ -157,7 +156,3 @@ const styles = {
     flexWrap: 'wrap'
   }
 }
-
-
-
-
