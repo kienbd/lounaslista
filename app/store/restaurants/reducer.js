@@ -14,7 +14,7 @@ export default function reduce(state = initialState, action) {
     case types.ALL_RESTAURANTS_FETCHING:
       return {...state, fetching: true}
     case types.RESTAURANT_FETCHING:
-      break
+      return { ...state }
     case types.RESTAURANT_FETCHED:
       const restaurant = {}
       restaurant[action.payload.title] = action.payload

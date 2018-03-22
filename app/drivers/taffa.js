@@ -34,5 +34,6 @@ const bootstrap = () => {
 }
 
 export default Taffa = {
+  config,
   bootstrap
 }

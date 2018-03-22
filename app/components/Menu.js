@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { Text, Button, List, ListItem, Body, Title, Icon } from 'native-base'
+import { Text, Button, List, ListItem, Body, Title, Icon, Spinner } from 'native-base'
 
 import CenteredText from '../components/CenteredText'
 import { renderCategoryIcon } from '../utils/rendering'
@@ -31,8 +31,19 @@ export default class Menu extends Component {
     if (restaurant == null)
       return null
     const { title, menu } = restaurant
-    if (title == null || menu == null)
-      return null
+    if (menu == null)
+      return (
+        <View style={styles.containerStyles}>
+          <View style={styles.linkStyles}>
+            <Button transparent dark large style={styles.linkButtonStyles} >
+              <Text style={styles.linkTextStyles} uppercase={false}> { title }</Text>
+            </Button>
+          </View>
+          <View>
+            <Spinner color='green' />
+          </View>
+        </View>
+      )
     return (
       <View style={styles.containerStyles}>
         <View style={styles.linkStyles}>

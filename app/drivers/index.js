@@ -8,5 +8,14 @@ import Alvari from './alvari'
 
 export default drivers = {
   Dipoli,
-  CSBuilding
+  CSBuilding,
+  Alvari,
+  Taffa
 }
+
+export const restaurants = [
+  Dipoli.config.title,
+  CSBuilding.config.title,
+  Alvari.config.title,
+  Taffa.config.title
+]

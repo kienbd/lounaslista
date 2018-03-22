@@ -2,7 +2,7 @@ import axios from 'axios'
 import Restaurant from './Restaurant'
 
 const config = {
-  title: 'dipoli',
+  title: 'Dipoli',
   en: 'http://www.fazerfoodco.fi/modules/json/json/Index?costNumber=3101&language=en',
   fi: 'http://www.fazerfoodco.fi/modules/json/json/Index?costNumber=3101&language=fi'
 }
@@ -12,7 +12,8 @@ const bootstrap = () => {
     .then(response => {
       if (response.status === 200) {
         const { data } = response
-        const restaurant = new Restaurant({title: data.RestaurantName})
+        // const restaurant = new Restaurant({title: data.RestaurantName})
+        const restaurant = new Restaurant({title: config.title})
 
         const todayMenu = data.MenusForDays.find(e => {
           const menuDate = new Date(e.Date)
@@ -37,5 +38,6 @@ const bootstrap = () => {
 }
 
 export default Dipoli = {
+  config,
   bootstrap
 }

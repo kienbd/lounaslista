@@ -3,13 +3,15 @@ import { Container, Content, Picker, Form, Button, Text, Icon } from 'native-bas
 import { View, FlatList, StatusBar } from 'react-native'
 import { StackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import _ from 'lodash'
 
 import Menu from '../components/Menu'
 import SearchBox from '../components/SearchBox'
 
 import * as restaurantsActions from '../store/restaurants/actions'
 
-import Restaurants from '../drivers'
+import { restaurants as restaurantsList } from '../drivers'
 
 export class HomeScreen extends Component {
   constructor() {
@@ -19,7 +21,7 @@ export class HomeScreen extends Component {
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const params = navigation.state.params || {}
-    const items = navigation.state.items || ['Loading...']
+    const items = restaurantsList
     return {
       header: (
         <View style={styles.headerStyles}>
@@ -79,14 +81,12 @@ export class HomeScreen extends Component {
   }
 
   onTitleClickHandler = () => {
-    const { navigation } = this.props
-    const { restaurants } = this.state
+    const { navigation, restaurants } = this.props
     navigation.navigate('Modal', {
       onGoingBack: this.onValueChangeHandler,
-      restaurants: restaurants
+      restaurants: _.values(restaurants)
     })
   }
-
 
   componentWillMount() {
     const { navigation } = this.props
@@ -96,17 +96,25 @@ export class HomeScreen extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(restaurantsActions.fetchAllRestaurants())
+    const { fetchAllRestaurants } = this.props
+    fetchAllRestaurants()
   }
 
   render() {
-    const restaurants = []
+    const { restaurants } = this.props
+    const mappedRestaurants = restaurantsList.map(e => {
+      if (restaurants[e])
+        return restaurants[e]
+      else
+        return {title: e}
+    })
+    console.log(mappedRestaurants)
     return (
       <Container>
         <StatusBar backgroundColor='blue' barStyle='dark-content' />
         <View style={styles.contentStyles}>
           <FlatList
-            data={restaurants}
+            data={_.compact(mappedRestaurants)}
             renderItem={({ item }) => <Menu restaurant={item} onTitleClick={this.onTitleClickHandler} />}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.title}
@@ -118,15 +126,16 @@ export class HomeScreen extends Component {
   }
 }
 
-const mapStatetoProps = state => {
-  return {
-    fetching: state.fetching,
-    fetched: state.fetched,
-    restaurants: state.restaurants
-  }
+const mapStateToProps = state => state.restaurants
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      fetchAllRestaurants: restaurantsActions.fetchAllRestaurants
+    }, dispatch
+  )
 }
 
-export default connect(mapStatetoProps)(HomeScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 
 const styles = {
