@@ -49,6 +49,9 @@ const bootstrap = () => {
       })
       return restaurant
     }
+  }).catch(e => {
+    console.log(e)
+    throw e
   })
 }
 

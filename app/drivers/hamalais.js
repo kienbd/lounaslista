@@ -18,7 +18,6 @@ const bootstrap = () => {
   const paddedMonth = _.padStart(month, 2, '0')
   const paddedDate = _.padStart(date, 2, '0')
   const string = `${paddedDate}.${paddedMonth}`
-  console.log(string)
   return axios({
     url,
     method: 'get',
@@ -49,6 +48,9 @@ const bootstrap = () => {
       })
       return restaurant
     }
+  }).catch(e => {
+    console.log(e)
+    throw e
   })
 }
 

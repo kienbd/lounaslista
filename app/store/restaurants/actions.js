@@ -14,6 +14,7 @@ export function fetchAllRestaurants() {
       dispatch({
         type: types.ALL_RESTAURANTS_FETCHED
       })
+    }).catch(e => {
     })
   }
 }
@@ -28,13 +29,19 @@ export function fetchRestaurant(restaurant) {
       const data = await restaurant.bootstrap()
       dispatch({
         type: types.RESTAURANT_FETCHED,
-        payload: data
+        payload: {...data, fetched: true}
       })
-      return new Promise(resolve => resolve(data))
+      return new Promise(resolve => resolve('fulfilled'))
     } catch (e) {
       dispatch({
-        type: types.RESTAURANT_FETCH_EMPTY
+        type: types.RESTAURANT_FETCH_ERROR,
+        payload: {
+          title: restaurant.config.title,
+          fetched: true,
+          error: true
+        }
       })
+      return new Promise(resolve => resolve('rejected'))
     }
   }
 }

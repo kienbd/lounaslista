@@ -30,7 +30,9 @@ export default class Menu extends Component {
     const { restaurant } = this.props
     if (restaurant == null)
       return null
-    const { title, menu } = restaurant
+    const { title, menu, fetched, error } = restaurant
+    if (error)
+      return null
     if (menu == null)
       return (
         <View style={styles.containerStyles}>
