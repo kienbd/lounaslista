@@ -94,9 +94,9 @@ export class HomeScreen extends Component {
       }
     }
     if (fetched === true) {
-      const size = _.size(_.filter(restaurants, e => !e.error))
+      const { successes, errors } = this.props
       Toast.show({
-        text: `Loaded ${size} restaurants Successfully !`,
+        text: `${size} successful, ${errors} failed !`,
         position: 'bottom',
         type: 'success',
         duration: 1000
