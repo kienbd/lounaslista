@@ -10,6 +10,7 @@ import Menu from '../components/Menu'
 import SearchBox from '../components/SearchBox'
 
 import * as restaurantsActions from '../store/restaurants/actions'
+import * as appsActions from '../store/apps/actions'
 
 import { restaurants as restaurantsList } from '../drivers'
 
@@ -29,7 +30,9 @@ export class HomeScreen extends Component {
       header: (
         <View style={styles.headerStyles}>
           <SearchBox
-            onUpdate={params.changeSelectorValue}
+            onRestautantChange={params.onRestaurantChange}
+            onLanguageChange={params.onLanguageChange}
+            defaultLanguage={params.defaultLanguage}
             items = {items}
           />
           <View style={{marginTop: 20, flexDirection: 'row'}}>
@@ -62,6 +65,11 @@ export class HomeScreen extends Component {
     selectRestaurant(selected)
   }
 
+  onSelectedLanguageChangeHandler = selected => {
+    const { changeLanguage } = this.props
+    changeLanguage(selected)
+  }
+
   onTitleClickHandler = () => {
     const { navigation, restaurants } = this.props
     navigation.navigate('Modal', {
@@ -71,9 +79,11 @@ export class HomeScreen extends Component {
   }
 
   componentWillMount() {
-    const { navigation } = this.props
+    const { navigation, language } = this.props
     navigation.setParams({
-      changeSelectorValue: this.onSelectedRestaurantChangeHandler
+      onRestaurantChange: this.onSelectedRestaurantChangeHandler,
+      onLanguageChange: this.onSelectedLanguageChangeHandler,
+      defaultLanguage: language
     })
   }
 
@@ -93,10 +103,10 @@ export class HomeScreen extends Component {
         flatList.scrollToIndex({index, animated: true})
       }
     }
-    if (fetched === true) {
+    if (!this.props.fetched && fetched) {
       const { successes, errors } = this.props
       Toast.show({
-        text: `${size} successful, ${errors} failed !`,
+        text: `${successes} successful, ${errors} failed !`,
         position: 'bottom',
         type: 'success',
         duration: 1000
@@ -113,7 +123,6 @@ export class HomeScreen extends Component {
       else
         return {title: e}
     })
-    console.log(mappedRestaurants)
     return (
       <Container>
         <StatusBar backgroundColor='blue' barStyle='dark-content' />
@@ -131,12 +140,19 @@ export class HomeScreen extends Component {
   }
 }
 
-const mapStateToProps = state => state.restaurants
+const mapStateToProps = state => {
+  const { restaurants, apps } = state
+  return {
+    ...restaurants,
+    ...apps
+  }
+}
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       fetchAllRestaurants: restaurantsActions.fetchAllRestaurants,
-      selectRestaurant: restaurantsActions.selectRestaurant
+      selectRestaurant: restaurantsActions.selectRestaurant,
+      changeLanguage: appsActions.changeLanguage
     }, dispatch
   )
 }

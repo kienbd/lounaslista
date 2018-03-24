@@ -18,12 +18,13 @@ const bootstrap = () => {
   return axios.get(url)
     .then(response => {
       if (response.status === 200) {
+        const restaurant = new Restaurant({title: config.title})
+
         const { data } = response
         const { meta, courses } = data
-        if (meta.length === 0 || courses.length === 0)
-          return null
         // const restaurant = new Restaurant({title: meta.ref_title})
-        const restaurant = new Restaurant({title: config.title})
+        if (meta.length === 0 || courses.length === 0)
+          return restaurant
 
         courses.forEach(e => {
           const properties = e.properties ? ` (${e.properties})` : ''

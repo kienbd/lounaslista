@@ -6,16 +6,33 @@ export default class SearchBox extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: ''
+      selectedRestaurant: '',
+      selectedLanguage: ''
     }
   }
 
-  handleOnChange = selected => {
-    const { onUpdate } = this.props
+  handleOnRestaurantChange = selected => {
+    const { onRestautantChange } = this.props
     this.setState({
-      selected
+      selectedRestaurant: selected
     })
-    onUpdate(selected)
+    onRestautantChange(selected)
+  }
+
+  handleOnLanguageChange = selected => {
+    const { onLanguageChange } = this.props
+    this.setState({
+      selectedLanguage: selected
+    })
+    onLanguageChange(selected)
+  }
+
+  componentWillUpdate(nextProps, nextStates) {
+    if (this.state.selectedLanguage === '' && nextProps.defaultLanguage !== this.props.defaultLanguage) {
+      this.setState({
+        selectedLanguage: nextProps.defaultLanguage
+      })
+    }
   }
 
   render() {
@@ -25,19 +42,19 @@ export default class SearchBox extends Component {
         <Picker
           iosHeader="Select one"
           mode="dropdown"
-          selectedValue={this.state.selected}
-          onValueChange={this.handleOnChange}
+          selectedValue={this.state.selectedLanguage}
+          onValueChange={this.handleOnLanguageChange}
           placeholder="Select a Restaurant"
           style={styles.iconStyles}
         >
-          <Item label={en} value={en} />
-          <Item label={fi} value={fi} />
+          <Item style={styles.itemStyles} label='EN' value='en' />
+          <Item style={styles.itemStyles} label='FI' value='fi' />
         </Picker>
         <Picker
           iosHeader="Select one"
           mode="dropdown"
-          selectedValue={this.state.selected}
-          onValueChange={this.handleOnChange}
+          selectedValue={this.state.selectedRestaurant}
+          onValueChange={this.handleOnRestaurantChange}
           placeholder="Select a Restaurant"
           style={styles.pickerStyles}
         >
@@ -64,12 +81,14 @@ const styles = {
     paddingRight: 10
   },
   iconStyles: {
-    marginTop: 10,
-    paddingRight: 10,
+    width: 80,
     color: '#9C9C9D'
   },
   pickerStyles: {
     flex: 1,
     color: '#9C9C9D'
+  },
+  itemStyles: {
+    flex: 1
   }
 }

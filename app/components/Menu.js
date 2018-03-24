@@ -6,7 +6,7 @@ import CenteredText from '../components/CenteredText'
 import { renderCategoryIcon } from '../utils/rendering'
 
 export default class Menu extends Component {
-  renderMenu = menu => menu.map((e, index) => {
+  renderMenuItem = menu => menu.map((e, index) => {
     return (
       <ListItem key={index}>
         <Body>
@@ -14,12 +14,25 @@ export default class Menu extends Component {
             e.components.map((elem, cindex) => <CenteredText key={cindex}> {elem} </CenteredText>)
           }
           {
-            e.properties.map((elem, cindex) => <CenteredText key={cindex}> {renderCategoryIcon(elem, styles)} </CenteredText>)
+            e.properties.map((elem, cindex) => <CenteredText key={cindex}> {renderCategoryIcon(cindex, elem, styles)} </CenteredText>)
           }
         </Body>
       </ListItem>
     )
   })
+
+  renderMenu = menu => {
+    if (menu.length > 0)
+      return this.renderMenuItem(menu)
+    else
+      return (
+        <ListItem>
+          <Body>
+            <CenteredText> No menu available </CenteredText>
+          </Body>
+        </ListItem>
+      )
+  }
 
   onButtonPress = () => {
     const { onTitleClick } = this.props
@@ -55,27 +68,19 @@ export default class Menu extends Component {
         </View>
         <View style={styles.listContainerStyles}>
           <List>
-            {
-              menu.vlunch.length > 0
-                ? <ListItem itemDivider style={styles.listItemDividerStyles}>
-                  <Body>
-                    <CenteredText style={styles.listItemDividerTextStyles}> Vegetatarian Lunch </CenteredText>
-                  </Body>
-                </ListItem>
-                : null
-            }
+            <ListItem itemDivider style={styles.listItemDividerStyles}>
+              <Body>
+                <CenteredText style={styles.listItemDividerTextStyles}> Vegetatarian Lunch </CenteredText>
+              </Body>
+            </ListItem>
             {
               this.renderMenu(menu.vlunch)
             }
-            {
-              menu.lunch.length > 0
-                ? <ListItem itemDivider style={styles.listItemDividerStyles}>
-                  <Body>
-                    <CenteredText style={styles.listItemDividerTextStyles}> Lunch </CenteredText>
-                  </Body>
-                </ListItem>
-                : null
-            }
+            <ListItem itemDivider style={styles.listItemDividerStyles}>
+              <Body>
+                <CenteredText style={styles.listItemDividerTextStyles}> Lunch </CenteredText>
+              </Body>
+            </ListItem>
             {
               this.renderMenu(menu.lunch)
             }

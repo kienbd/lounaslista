@@ -23,7 +23,7 @@ const bootstrap = () => {
         })
 
         if (todayMenu == null)
-          return null
+          return restaurant
 
         todayMenu.SetMenus.forEach(e => {
           const menuItem = Restaurant.createItem(...e.Components)

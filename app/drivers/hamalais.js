@@ -37,7 +37,7 @@ const bootstrap = () => {
       })
 
       if (todayMenu == null)
-        return null
+        return restaurant
 
       const { description } = todayMenu
       description._cdata.split(',<br />\r\n').forEach(e => {
