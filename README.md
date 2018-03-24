@@ -1,4 +1,4 @@
-Currated Lunch Menu App.
+An app to curate lunch menus from different restaurants. 
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
@@ -12,6 +12,7 @@ Visit [here](https://github.com/react-community/create-react-native-app/blob/mas
   * [npm run expo](#npm-run-expo)
   * [npm run debug](#npm-run-debug)
 * [Debug on real device with React Native Debugger](#debug-on-real-device-with-react-native-debugger)
+* [Add more restaurants](#add-more-restaurants)
 
 
 ## Available Scripts
@@ -67,7 +68,9 @@ Start RND app:
 Open it with Expo app on your phone. Shake the phone, select `Remote JS Debugging`
 
 
+## Add more restaurants
 
+To add a new restaurant, create driver for it in `/app/drivers`. Refer to this for [example](https://github.com/kienbd/lounaslista/blob/master/app/drivers/dipoli.js).
 
 
 
