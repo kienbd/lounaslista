@@ -29,9 +29,9 @@
 */
 
 const keywords = {
-  fish: ['fish'],
-  'pork/ beef': ['meat', 'pork', 'beef'],
-  chicken: ['chicken']
+  fish: ['fish', 'saithe'],
+  'pork/beef': ['meat', 'pork', 'beef', 'sausage'],
+  chicken: ['chicken', 'turkey']
 }
 
 export default class Restaurant {

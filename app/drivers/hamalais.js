@@ -18,7 +18,6 @@ const bootstrap = () => {
   const paddedMonth = _.padStart(month, 2, '0')
   const paddedDate = _.padStart(date, 2, '0')
   const string = `${paddedDate}.${paddedMonth}`
-  console.log(string)
   return axios({
     url,
     method: 'get',
@@ -38,7 +37,7 @@ const bootstrap = () => {
       })
 
       if (todayMenu == null)
-        return null
+        return restaurant
 
       const { description } = todayMenu
       description._cdata.split(',<br />\r\n').forEach(e => {
@@ -49,9 +48,13 @@ const bootstrap = () => {
       })
       return restaurant
     }
+  }).catch(e => {
+    console.log(e)
+    throw e
   })
 }
 
 export default Hamalais = {
+  config,
   bootstrap
 }

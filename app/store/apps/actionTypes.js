@@ -1,0 +1,1 @@
+export const LANGUAGE_CHANGED = 'apps.LANGUAGE_CHANGED'

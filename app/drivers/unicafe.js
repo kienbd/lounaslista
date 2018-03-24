@@ -38,7 +38,7 @@ const bootstrap = () => {
       })
 
       if (todayMenu == null)
-        return null
+        return restaurant
 
       const { description } = todayMenu
       description._text.split('.').forEach(e => {
@@ -49,9 +49,13 @@ const bootstrap = () => {
       })
       return restaurant
     }
+  }).catch(e => {
+    console.log(e)
+    throw e
   })
 }
 
 export default UniCafe = {
+  config,
   bootstrap
 }

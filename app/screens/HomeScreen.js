@@ -1,31 +1,39 @@
 import React, { Component } from 'react'
-import { Container, Content, Picker, Form, Button, Text, Icon } from 'native-base'
+import { Container, Content, Picker, Form, Button, Text, Icon, Toast } from 'native-base'
 import { View, FlatList, StatusBar } from 'react-native'
 import { StackNavigator } from 'react-navigation'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import _ from 'lodash'
 
 import Menu from '../components/Menu'
 import SearchBox from '../components/SearchBox'
 
-import Restaurants from '../drivers'
+import * as restaurantsActions from '../store/restaurants/actions'
+import * as appsActions from '../store/apps/actions'
 
-export default class HomeScreen extends Component {
+import { restaurants as restaurantsList } from '../drivers'
+
+export class HomeScreen extends Component {
   constructor() {
     super()
-    this.state = {
-      restaurants: [],
-      selected: ''
-    }
     this.flatList = null
+    this.state = {
+      showToast: false
+    }
   }
 
   static navigationOptions = ({ navigation, navigationOptions }) => {
     const params = navigation.state.params || {}
+    const items = restaurantsList
     return {
       header: (
         <View style={styles.headerStyles}>
           <SearchBox
-            items={Restaurants.map(e => e.title)}
-            onUpdate={params.changeSelectorValue}
+            onRestautantChange={params.onRestaurantChange}
+            onLanguageChange={params.onLanguageChange}
+            defaultLanguage={params.defaultLanguage}
+            items = {items}
           />
           <View style={{marginTop: 20, flexDirection: 'row'}}>
             <Button iconLeft bordered dark style={{...styles.topBtnStyles, width: 100}}>
@@ -52,65 +60,75 @@ export default class HomeScreen extends Component {
     }
   }
 
-  onValueChangeHandler = selected => {
-    this.setState({
-      selected
-    })
+  onSelectedRestaurantChangeHandler = selected => {
+    const { selectRestaurant } = this.props
+    selectRestaurant(selected)
   }
 
-  componentWillUpdate = (nextProps, nextStates) => {
-    const { selected, restaurants } = nextStates
-    const { currentSelected } = this.state
-    if (selected !== '' && selected !== currentSelected) {
-      const restaurant = restaurants.find(e => e.title === selected)
-      if (restaurant) {
-        const index = restaurants.indexOf(restaurant)
-        const flatList = this.flatList
-
-        if (flatList) {
-          flatList.scrollToIndex({index, animated: true})
-        }
-      }
-    }
+  onSelectedLanguageChangeHandler = selected => {
+    const { changeLanguage } = this.props
+    changeLanguage(selected)
   }
 
   onTitleClickHandler = () => {
-    const { navigation } = this.props
-    const { restaurants } = this.state
+    const { navigation, restaurants } = this.props
     navigation.navigate('Modal', {
-      onGoingBack: this.onValueChangeHandler,
-      restaurants: restaurants
+      onGoingBack: this.onSelectedRestaurantChangeHandler,
+      restaurants: _.values(_.filter(restaurants, e => !e.error))
     })
   }
 
-
   componentWillMount() {
-    const { navigation } = this.props
+    const { navigation, language } = this.props
     navigation.setParams({
-      changeSelectorValue: this.onValueChangeHandler
+      onRestaurantChange: this.onSelectedRestaurantChangeHandler,
+      onLanguageChange: this.onSelectedLanguageChangeHandler,
+      defaultLanguage: language
     })
   }
 
   componentDidMount() {
-    Restaurants.forEach(ed => {
-      ed.driver.bootstrap().then(restaurant => {
-        if (restaurant) {
-          let updated = this.state.restaurants.slice()
-          updated.push(restaurant)
-          this.setState({restaurants: updated})
-        }
-      })
-    })
+    const { fetchAllRestaurants } = this.props
+    fetchAllRestaurants()
   }
 
+  componentWillUpdate = (nextProps, nextStates) => {
+    const { selected, fetched, restaurants } = nextProps
+    const { currentSelected } = this.props.selected
+    if (selected !== '' && selected !== currentSelected) {
+      const index = restaurantsList.indexOf(selected)
+      const flatList = this.flatList
+
+      if (flatList) {
+        flatList.scrollToIndex({index, animated: true})
+      }
+    }
+    if (!this.props.fetched && fetched) {
+      const { successes, errors } = this.props
+      Toast.show({
+        text: `${successes} successful, ${errors} failed !`,
+        position: 'bottom',
+        type: 'success',
+        duration: 1000
+      })
+    }
+  }
+
+
   render() {
-    const { restaurants } = this.state
+    const { restaurants } = this.props
+    const mappedRestaurants = restaurantsList.map(e => {
+      if (restaurants[e])
+        return restaurants[e]
+      else
+        return {title: e}
+    })
     return (
       <Container>
         <StatusBar backgroundColor='blue' barStyle='dark-content' />
         <View style={styles.contentStyles}>
           <FlatList
-            data={restaurants}
+            data={_.compact(mappedRestaurants)}
             renderItem={({ item }) => <Menu restaurant={item} onTitleClick={this.onTitleClickHandler} />}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item.title}
@@ -121,6 +139,25 @@ export default class HomeScreen extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  const { restaurants, apps } = state
+  return {
+    ...restaurants,
+    ...apps
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      fetchAllRestaurants: restaurantsActions.fetchAllRestaurants,
+      selectRestaurant: restaurantsActions.selectRestaurant,
+      changeLanguage: appsActions.changeLanguage
+    }, dispatch
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 
 const styles = {
