@@ -37,19 +37,19 @@ export class HomeScreen extends Component {
           />
           <View style={{marginTop: 20, flexDirection: 'row'}}>
             <Button iconLeft bordered dark style={{...styles.topBtnStyles, width: 100}}>
-              <Icon name='duck'/>
+              <Icon name='md-trophy'/>
               <Text uppercase={false} style={{...styles.topBtnTextStyles, width: 90}}>
                 Chicken
               </Text>
             </Button>
             <Button iconLeft bordered dark style={styles.topBtnStyles}>
-              <Icon name='cow' />
+              <Icon name='md-paw' />
               <Text uppercase={false} style={styles.topBtnTextStyles}>
                 Beef/ Pork
               </Text>
             </Button>
             <Button iconLeft bordered dark style={styles.topBtnStyles}>
-              <Icon name='fish' />
+              <Icon name='ios-water' />
               <Text uppercase={false} style={styles.topBtnTextStyles}>
                 Fish
               </Text>

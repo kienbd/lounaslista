@@ -24,7 +24,7 @@ export default class ModalScreen extends Component {
         </Text>
       </Left>
       <Right>
-        <Icon name="chevron-right" />
+        <Icon name="ios-arrow-round-forward" />
       </Right>
     </ListItem>
   )

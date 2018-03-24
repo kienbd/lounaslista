@@ -152,7 +152,7 @@ export default {
   },
 
   // Icon
-  iconFamily: "MaterialCommunityIcons",
+  iconFamily: "Ionicons",
   iconFontSize: platform === "ios" ? 30 : 28,
   iconHeaderSize: platform === "ios" ? 33 : 24,
 

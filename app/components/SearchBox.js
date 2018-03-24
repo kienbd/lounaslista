@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Picker, Item, Form, Icon } from 'native-base'
+import _ from 'lodash'
 
 export default class SearchBox extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedRestaurant: '',
+      selectedRestaurant: undefined,
       selectedLanguage: ''
     }
   }
@@ -27,6 +28,30 @@ export default class SearchBox extends Component {
     onLanguageChange(selected)
   }
 
+  renderRestaurantPicker = items => {
+    if (items === null || items.length === 0)
+      return null
+    else {
+      const mappedItems = items.map(e => {
+        return <Item key={e} label={e} value={e} />
+      })
+      mappedItems.unshift(
+        <Picker.Item key="all" label="Select a Restaurant" value="all" />
+      )
+      return (
+        <Picker
+          mode="dropdown"
+          placeholder="Select a Restaurant"
+          selectedValue={this.state.selectedRestaurant}
+          onValueChange={this.handleOnRestaurantChange}
+          style={styles.pickerStyles}
+        >
+          {mappedItems}
+        </Picker>
+      )
+    }
+  }
+
   componentWillUpdate(nextProps, nextStates) {
     if (this.state.selectedLanguage === '' && nextProps.defaultLanguage !== this.props.defaultLanguage) {
       this.setState({
@@ -40,7 +65,6 @@ export default class SearchBox extends Component {
     return (
       <View style={styles.pickerContainerStyles}>
         <Picker
-          iosHeader="Select one"
           mode="dropdown"
           selectedValue={this.state.selectedLanguage}
           onValueChange={this.handleOnLanguageChange}
@@ -50,21 +74,7 @@ export default class SearchBox extends Component {
           <Item style={styles.itemStyles} label='EN' value='en' />
           <Item style={styles.itemStyles} label='FI' value='fi' />
         </Picker>
-        <Picker
-          iosHeader="Select one"
-          mode="dropdown"
-          selectedValue={this.state.selectedRestaurant}
-          onValueChange={this.handleOnRestaurantChange}
-          placeholder="Select a Restaurant"
-          style={styles.pickerStyles}
-        >
-          <Item label="Select a Restaurant" value="all" />
-          {
-            items
-              ? items.map((e, index) => <Item key={index} label={e} value={e} />)
-              : null
-          }
-        </Picker>
+        { this.renderRestaurantPicker(items) }
       </View>
     )
   }
@@ -81,12 +91,10 @@ const styles = {
     paddingRight: 10
   },
   iconStyles: {
-    width: 80,
-    color: '#9C9C9D'
+    width: 80
   },
   pickerStyles: {
-    flex: 1,
-    color: '#9C9C9D'
+    flex: 1
   },
   itemStyles: {
     flex: 1
